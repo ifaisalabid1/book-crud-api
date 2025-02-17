@@ -6,8 +6,9 @@ class BookController {
     try {
       const book = await bookService.getAllBooks()
 
-      !book &&
-        res.status(404).json({ success: false, message: 'No book in listed' })
+      if (book.length === 0) {
+        res.status(404).json({ success: false, message: 'No books found.' })
+      }
 
       res.status(200).json({ success: true, data: book })
     } catch (err: Error | any) {
